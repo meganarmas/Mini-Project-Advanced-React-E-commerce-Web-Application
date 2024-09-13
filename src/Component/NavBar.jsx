@@ -13,6 +13,8 @@ function NavigationBar() {
             <Navbar.Brand as={Link} to="/catalog">Product Catalog</Navbar.Brand> <br />
             <Navbar.Brand as={Link} to="/customer-info">Customer Information</Navbar.Brand> <br />
             <Navbar.Brand as={Link} to="/order-history">Order History</Navbar.Brand> <br />
+            <Navbar.Brand as={Link} to="/delete">Delete Account</Navbar.Brand> <br />
+            <Navbar.Brand as={Link} to="/create">Register</Navbar.Brand> <br />
         </Navbar>
     );
 }

@@ -1,134 +1,90 @@
-import { useMemo, useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { addItem, removeItem, checkout } from "../Slice/CartSlice";
-import { Button, ListGroup } from "react-bootstrap";
-import { useQueries } from "@tanstack/react-query";
+import React, { useState, useContext, useEffect } from 'react';
+import UserContext from './UserContext';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
-const ShoppingCart = () => {
-    const cart = useSelector((state) => state.cart);
-    const cartItemIds = Object.keys(cart.items);
-    const dispatch = useDispatch();
-    const [previousOrders, setPreviousOrders] = useState([]);
-    const [ordersWithPrices, setOrdersWithPrices] = useState([]);
-    const [checkoutStatus, setCheckoutStatus] = useState(""); // New state for checkout status
-
-    const handleAddItem = useCallback((id) => dispatch(addItem({ id })), [dispatch]);
-    const handleRemoveItem = useCallback((id) => dispatch(removeItem({ id })), [dispatch]);
-    const handleCheckout = useCallback(async () => {
-        try {
-            await dispatch(checkout()); // Assuming checkout is an async action
-            setCheckoutStatus("Order has been processed successfully!");
-        } catch (error) {
-            setCheckoutStatus("Failed to process order.");
-        }
-    }, [dispatch]);
+function Login() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const { setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        sessionStorage.setItem('cartItems', JSON.stringify(cart.items));
-    }, [cart.items]);
+        const storedUser = sessionStorage.getItem('userSession');
+        if (storedUser) {
+            const userSession = JSON.parse(storedUser);
+            setUser(userSession);
 
-    // Fetch previous orders when the component mounts
-    useEffect(() => {
-        fetch('https://fakestoreapi.com/carts')
-            .then(res => res.json())
-            .then(json => {
-                setPreviousOrders(json);
-                calculateOrderPrices(json);
-            })
-            .catch(err => console.error("Error fetching previous orders:", err));
-    }, []);
-
-    const calculateOrderPrices = async (orders) => {
-        const updatedOrders = await Promise.all(orders.map(async (order) => {
-            let total = 0;
-            for (const item of order.products) {
-                const product = await fetch(`https://fakestoreapi.com/products/${item.productId}`).then(res => res.json());
-                total += product.price * item.quantity;
+            if (userSession.name.toLowerCase() === 'admin') { 
+                navigate('/add-product');
+            } else {
+                navigate('/home');
             }
-            return { ...order, totalPrice: total };
-        }));
-        setOrdersWithPrices(updatedOrders);
+        }
+    }, [navigate, setUser]);
+
+    const handleLogin = (e) => {
+        e.preventDefault()
+        const storedUser = sessionStorage.getItem('userSession');
+        const userSession = storedUser ? JSON.parse(storedUser) : null;
+
+        if (userSession && userSession.name === username && userSession.password === password) {
+            const token = 'dummyToken';
+
+            const authenticatedUser = {
+                ...userSession,
+                token: token
+            };
+
+
+            sessionStorage.setItem('userSession', JSON.stringify(authenticatedUser));
+
+            setUser(authenticatedUser);
+
+            if (username.toLowerCase() === 'admin') {
+                navigate('/add-product');
+            } else {
+                navigate('/home');
+            }
+        } else {
+            alert("Invalid username or password!");
+        }
     };
 
-    const productQueries = useQueries({
-        queries: cartItemIds.map(id => ({
-            queryKey: ['product', id],
-            queryFn: () => fetch(`https://fakestoreapi.com/products/${id}`).then(res => res.json())
-        }))
-    });
-
-    const getProductName = useCallback((id) => {
-        const index = cartItemIds.findIndex(itemId => itemId == id);
-        const productQuery = productQueries[index];
-        return productQuery?.data?.title || 'Unknown product';
-    }, [productQueries, cartItemIds]);
-
-    const productNames = useMemo(() =>
-        cartItemIds.reduce((acc, id) => ({
-            ...acc,
-            [id]: getProductName(id)
-        }), {}),
-        [cartItemIds, getProductName]);
-
-    const totalPrice = useMemo(() => {
-        return cartItemIds.reduce((total, id) => {
-            const index = cartItemIds.findIndex(itemId => itemId === id);
-            const productQuery = productQueries[index];
-
-            if (productQuery.isSuccess && productQuery.data) {
-                const productPrice = productQuery.data.price;
-                const quantity = cart.items[id];
-                return total + (productPrice * quantity);
-            }
-            return total;
-        }, 0);
-    }, [cart.items, cartItemIds, productQueries]);
-
     return (
-        <div>
-            <h2>Shopping Cart</h2>
-            <ListGroup>
-                {Object.entries(cart.items).map(([id, quantity]) => (
-                    <ListGroup.Item key={id} className="d-flex justify-content-between align-items-center">
-                        <span>{productNames[id]} - Quantity: {quantity}</span>
-                        <div>
-                            <Button variant="success" onClick={() => handleAddItem(id)}>+</Button>
-                            <Button variant="danger" onClick={() => handleRemoveItem(id)}>-</Button>
-                        </div>
-                    </ListGroup.Item>
-                ))}
-            </ListGroup>
-            <p>Total Items: {cart.totalItems}</p>
-            <p>Total Price: ${totalPrice.toFixed(2)}</p>
-            <Button variant="primary" onClick={handleCheckout}>Checkout</Button>
-            <Link to="/home">
-                <Button variant="secondary" className="ms-2">Return to Home</Button>
-            </Link>
-
-            {checkoutStatus && (
-                <div className="alert alert-info mt-3">
-                    {checkoutStatus}
-                </div>
-            )}
-
-            <h3>Previous Orders</h3>
-            {ordersWithPrices.length === 0 ? (
-                <p>Loading previous orders...</p>
-            ) : (
-                <ListGroup>
-                    {ordersWithPrices.map(order => (
-                        <ListGroup.Item key={order.id}>
-                            <p>Order ID: {order.id}</p>
-                            <p>Date: {new Date(order.date).toLocaleDateString()}</p>
-                            <p>Total Items: {order.products.reduce((acc, item) => acc + item.quantity, 0)}</p>
-                            <p>Total Price: ${order.totalPrice.toFixed(2)}</p>
-                        </ListGroup.Item>
-                    ))}
-                </ListGroup>
-            )}
-        </div>
+        <Container className="vh-100">
+            <Row className="justify-content-center align-items-center h-100">
+                <Col md={5}>
+                    <Form onSubmit={handleLogin}>
+                        <Form.Group controlId="usernameInput" className="mb-3">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter username'
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="passwordInput" className="mb-3">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control
+                                type='password'
+                                placeholder='Enter password'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+                        <Button variant="primary" type="submit" className="w-100">
+                            Login
+                        </Button>
+                        <NavLink to="/CreateUser">Create Account</NavLink> <br/>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     );
-};
+}
 
-export default ShoppingCart;
+export default Login;

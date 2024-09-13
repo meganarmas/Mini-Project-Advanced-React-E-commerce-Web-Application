@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { store } from './store';
+import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ShoppingCart from './Component/ShoppingCart';
 import Logout from './Component/Logout';
 import Login from './Component/Login';
 import Home from './Component/Homepage';
 import CRUDProducts from './Component/CRUDProducts';
 import FetchApi from './Component/CRUDUser';
-import './App.css';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import UserContext from './Component/UserContext';
 import NavigationBar from './Component/NavBar';
-import { store } from './store';
-import { Provider } from 'react-redux';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductCatalog from './Component/ProductCatalog';
 import OrderHistory from './Component/OrderHistory';
-
+import DeleteAccount from './Component/DeleteUser';
+import Register from './Component/CreateUser';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,8 @@ function App() {
               <Route path="/catalog" element={<ProductCatalog />} />
               <Route path="/customer-info" element={<FetchApi />} />
               <Route path="/order-history" element={<OrderHistory />} />
+              <Route path="/delete" element={<DeleteAccount />} />
+              <Route path="/create" element={<Register />} />
             </Routes>
           </Router>
         </UserContext.Provider>

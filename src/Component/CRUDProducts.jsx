@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// also includes a catalog to fetch products
 
 const apiUrl = 'https://fakestoreapi.com/products';
 
@@ -54,8 +53,6 @@ function CRUDProducts() {
   return (
     <div>
       <h1>Product Management</h1>
-
-      {/* Create Product */}
       <h2>Create Product</h2>
       <input
         type="text"
@@ -71,7 +68,7 @@ function CRUDProducts() {
       />
       <button onClick={createProduct}>Add Product</button>
 
-      {/* Update Product */}
+
       {editProduct && (
         <>
           <h2>Update Product</h2>
@@ -91,7 +88,7 @@ function CRUDProducts() {
         </>
       )}
 
-      {/* Display Products */}
+
       <h2>Product List</h2>
       <ul>
         {products.map((product) => (

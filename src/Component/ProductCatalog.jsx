@@ -6,6 +6,8 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import "./i18n";
 import { useTranslation} from 'react-i18next';
+import { loadLanguages } from 'i18next';
+import i18n from './i18n';
 
 
 const fetchProducts = async () => {
@@ -26,6 +28,7 @@ const fetchCategories = async () => {
 };
 
 const ProductCatalog = () => {
+    const { t, i18n } = useTranslation();
     const [sortBy, setSortBy] = useState('price_asc');
     const [searchTitle, setSearchTitle] = useState('');
     const [minPrice, setMinPrice] = useState('');
@@ -104,13 +107,17 @@ const ProductCatalog = () => {
         setSearchTitle(e.target.value);
     };
 
+    const handleLanguageChange = (language) => {
+        i18n.changeLanguage(language);
+    };
+
     return (
         <main>
-            <h2>'{t'</h2>
-            <h6>Take a second to browse to your heart's content!</h6>
+            <h2>{t('topMessage')}</h2>
+            <h6>{t('paragraph')}</h6>
 
             <section aria-labelledby='categories'>
-                <h4 id="categories">Categories</h4>
+                <h4 id="categories">{t('categories')}</h4>
                 <ul>
                     <li>
                         <Button variant='link' onClick={() => handleCategoryChange('')}>All</Button>
@@ -124,9 +131,9 @@ const ProductCatalog = () => {
             </section>
 
             <section aria-labelledby='filters'>
-                <h4 id="filters">Filter</h4>
+                <h4 id="filters">{t('filter')}</h4>
                 <Form.Group>
-                    <Form.Label>Search by Title</Form.Label>
+                    <Form.Label>{t('searchByTitle')}</Form.Label>
                     <Form.Control
                         type="text"
                         value={searchTitle}
@@ -136,7 +143,7 @@ const ProductCatalog = () => {
                 </Form.Group>
 
                 <Form.Group>
-                    <Form.Label>Minimum Price</Form.Label>
+                    <Form.Label>{t('minPrice')}</Form.Label>
                     <Form.Control
                         type="number"
                         value={minPrice}
@@ -146,7 +153,7 @@ const ProductCatalog = () => {
                 </Form.Group>
 
                 <Form.Group>
-                    <Form.Label>Maximum Price</Form.Label>
+                    <Form.Label>{t('maxPrice')}</Form.Label>
                     <Form.Control
                         type="number"
                         value={maxPrice}
@@ -156,13 +163,16 @@ const ProductCatalog = () => {
                 </Form.Group>
 
                 <Form.Select aria-label='Sort Products' value={sortBy} onChange={handleSortChange} style={{ marginTop: '10px', maxWidth: '150px' }}>
-                    <option value="price_asc">Low to High</option>
-                    <option value="price_desc">High to Low</option>
+                    <option value="price_asc">{t('priceLowToHigh')}</option>
+                    <option value="price_desc">{t('priceHighToLow')}</option>
                 </Form.Select>
             </section>
 
+            <Button onClick={() => handleLanguageChange('en')}>English</Button>
+            <Button onClick={() => handleLanguageChange('kr')}>Korean</Button>
+
             <section aria-labelledby="products">
-                <h4 id="products">Products</h4>
+                <h4 id="products">{t('products')}</h4>
                 {isLoading && <p>Loading products...</p>}
                 {error && <p>Error loading products: {error.message}</p>}
                 <Row>
@@ -177,8 +187,8 @@ const ProductCatalog = () => {
                                 />
                                 <Card.Body>
                                     <Card.Title>{product.title}</Card.Title>
-                                    <Card.Text>Price: ${product.price}</Card.Text>
-                                    <Button variant="primary" onClick={() => handleAddToCart(product.id)}>Add to Cart</Button>
+                                    <Card.Text>{t('price')}: ${product.price}</Card.Text>
+                                    <Button variant="primary" onClick={() => handleAddToCart(product.id)}>{t('addToCart')}</Button>
                                 </Card.Body>
                             </Card>
                         </Col>

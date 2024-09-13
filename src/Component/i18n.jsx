@@ -14,7 +14,9 @@ const resources = {
             minPrice: "Minimum Price",
             searchByTitle: "Search by Title",
             filter: "Filter",
-            welcomeMessage: " Welcome to the E-Commerce App!"
+            welcomeMessage: " Welcome to the E-Commerce App!",
+            products: "Products",
+            addToCart: "Add to Cart"
         },
     },
     kr: {
@@ -29,7 +31,9 @@ const resources = {
             minPrice: "최소 가격",
             searchByTitle: "제목으로 검색",
             filter: "필터",
-            welcomeMessage: "이커머스 앱에 오신 것을 환영합니다!"
+            welcomeMessage: "이커머스 앱에 오신 것을 환영합니다!",
+            products: "제품",
+            addToCart: "장바구니에 추가"
         },
     },
 };

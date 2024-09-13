@@ -33,7 +33,7 @@ const FetchApi = () => {
         try {
             const response = await axios.put(`https://fakestoreapi.com/users/${editUser.id}`, newUser);
             setUser(posts.map(post => post.id === editPost.id ? response.data : post));
-            setEditUser(2); // should clear the editing state
+            setEditUser(2); 
             setNewUser({name: '', email: ''});
         } catch (error) {
             console.error('Error updating user', error)
