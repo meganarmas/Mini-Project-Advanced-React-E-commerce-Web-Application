@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import UserContext from './UserContext';
-import UserContext from './UserContext';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 

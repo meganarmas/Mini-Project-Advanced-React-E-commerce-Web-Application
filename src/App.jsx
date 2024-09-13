@@ -7,14 +7,14 @@ import ShoppingCart from './Component/ShoppingCart';
 import Logout from './Component/Logout';
 import Login from './Component/Login';
 import Home from './Component/Homepage';
-import CRUDProducts from './Component/CRUDProducts';
-import FetchApi from './Component/CRUDUser';
+import UpdateUser from './Component/EditUser';
 import UserContext from './Component/UserContext';
 import NavigationBar from './Component/NavBar';
 import ProductCatalog from './Component/ProductCatalog';
 import OrderHistory from './Component/OrderHistory';
 import DeleteAccount from './Component/DeleteUser';
 import Register from './Component/CreateUser';
+import CRUDProduct from './Component/CRUDProduct';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -49,12 +49,12 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/shopping-cart" element={<ShoppingCart />} />
-              <Route path="/products" element={<CRUDProducts />} />
+              <Route path="/products" element={<CRUDProduct />} />
               <Route path="/catalog" element={<ProductCatalog />} />
-              <Route path="/customer-info" element={<FetchApi />} />
               <Route path="/order-history" element={<OrderHistory />} />
-              <Route path="/delete" element={<DeleteAccount />} />
               <Route path="/create" element={<Register />} />
+              <Route path="/update" element={<UpdateUser />} />
+              <Route path="/delete" element={<DeleteAccount />} />
             </Routes>
           </Router>
         </UserContext.Provider>
