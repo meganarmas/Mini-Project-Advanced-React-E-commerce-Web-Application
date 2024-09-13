@@ -1,13 +1,12 @@
-// FetchApi.test.js
 import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import axios from 'axios';
-import FetchApi from '../component/FetchApi';
+import CRUDProduct from '../Component/CRUDProduct';
 
 jest.mock('axios');
 
-describe('FetchApi Component', () => {
+describe('CRUDProduct Component', () => {
     test('fetches and displays products', async () => {
         const mockResponse = {
             data: [
@@ -16,7 +15,7 @@ describe('FetchApi Component', () => {
         };
         axios.get.mockResolvedValue(mockResponse);
 
-        render(<FetchApi />);
+        render(<CRUDProduct />);
 
         await waitFor(() => {
             expect(axios.get).toHaveBeenCalledWith('https://fakestoreapi.com/products');
@@ -58,7 +57,7 @@ describe('FetchApi Component', () => {
         axios.get.mockResolvedValue({ data: initialProducts });
         axios.put.mockResolvedValue({ data: updatedProduct });
 
-        render(<FetchApi />);
+        render(<CRUDProduct />);
 
         await waitFor(() => expect(screen.getByText('Product C')).toBeInTheDocument());
 
@@ -87,7 +86,7 @@ describe('FetchApi Component', () => {
         axios.get.mockResolvedValue({ data: initialProducts });
         axios.delete.mockResolvedValue({});
 
-        render(<FetchApi />);
+        render(<CRUDProduct />);
 
         await waitFor(() => expect(screen.getByText('Product D')).toBeInTheDocument());
 

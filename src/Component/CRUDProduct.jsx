@@ -8,7 +8,7 @@ const CRUDProduct = () => {
     const [editProduct, setEditProduct] = useState(null);
     const [editProductForm, setEditProductForm] = useState({ title: '', price: '', description: '' });
 
-    // Fetch products from the API
+
     const fetchProducts = async () => {
         try {
             const response = await axios.get('https://fakestoreapi.com/products');
@@ -18,7 +18,7 @@ const CRUDProduct = () => {
         }
     };
 
-    // Add a new product
+
     const addProduct = async (e) => {
         e.preventDefault();
         try {
@@ -30,7 +30,6 @@ const CRUDProduct = () => {
         }
     };
 
-    // Update an existing product
     const updateProduct = async (e) => {
         e.preventDefault();
         if (!editProduct) return;
@@ -45,7 +44,7 @@ const CRUDProduct = () => {
         }
     };
 
-    // Delete a product
+
     const deleteProduct = async (id) => {
         try {
             await axios.delete(`https://fakestoreapi.com/products/${id}`);
@@ -55,12 +54,11 @@ const CRUDProduct = () => {
         }
     };
 
-    // Load products on component mount
+
     useEffect(() => {
         fetchProducts();
     }, []);
 
-    // Sync editProductForm with selected product for editing
     useEffect(() => {
         if (editProduct) {
             setEditProductForm({
@@ -73,7 +71,6 @@ const CRUDProduct = () => {
 
     return (
         <Container>
-            {/* Add New Product Form */}
             <h2>Add New Product</h2>
             <Form onSubmit={addProduct}>
                 <Form.Group controlId="newTitle">
@@ -110,7 +107,6 @@ const CRUDProduct = () => {
                 <Button type="submit">Add Product</Button>
             </Form>
 
-            {/* Edit Product Form */}
             {editProduct && (
                 <>
                     <h2>Edit Product</h2>
@@ -151,7 +147,6 @@ const CRUDProduct = () => {
                 </>
             )}
 
-            {/* Products List */}
             <h2>Products</h2>
             <Row className="mb-4">
                 {products.map(product => (
