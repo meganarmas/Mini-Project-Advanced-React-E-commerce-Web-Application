@@ -14,9 +14,10 @@ const resources = {
     spn: {
         translation: {
             welcomeMessage: "¡Bienvenido al blog de API!",
-            addMessage: "Agregar una publicación",
-            updateMessage: "Actualizar publicación",
-            deleteMessage: "Comentario",
+            login: "",
+            logout: "",
+            price: "",
+            priceLowtoHigh: "",
         },
     },
 };

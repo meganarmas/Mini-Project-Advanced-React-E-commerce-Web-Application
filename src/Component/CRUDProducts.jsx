@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+// also includes a catalog to fetch products
 
 const apiUrl = 'https://fakestoreapi.com/products';
 

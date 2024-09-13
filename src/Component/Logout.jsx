@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import UserContext from "./UserContext";
+import { useContext, useEffect } from 'react';
+import UserContext from './UserContext';
 import { useNavigate } from 'react-router-dom';
 
 function Logout() {
@@ -8,13 +8,15 @@ function Logout() {
 
     useEffect(() => {
         localStorage.removeItem('userSession');
-        setUser({ name: '', isLoggedIn: false});
+        
+        if (setUser) {
+            setUser({ name: '', isLoggedIn: false });
+        }
+        navigate('/home');
 
-        navigate('/');
     }, [navigate, setUser]);
 
-    return (
-        <div>Logging out....</div>
-    );
+    return <div>Logging out....</div>;
 }
+
 export default Logout;

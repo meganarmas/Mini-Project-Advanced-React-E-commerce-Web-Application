@@ -9,29 +9,29 @@ jest.mock('axios');
 describe("FetchApi Component", () => {
 
     test('fetches and displays posts', async () => {
-        const mockResponse = { data: [{ id: 1, title: "Testing A Post", body: "This is a test post!" }] };
+        const mockResponse = { data: [{ id: 1, name: "John Doe", email: "johndoe@gmail.com" }] };
         axios.get.mockResolvedValue(mockResponse);
 
         render(<FetchApi />);
 
         await waitFor(() => {
             expect(axios.get).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/posts');
-            expect(screen.getByText("Testing A Post")).toBeInTheDocument();
-            expect(screen.getByText("This is a test post!")).toBeInTheDocument();
+            expect(screen.getByText("John Doe")).toBeInTheDocument();
+            expect(screen.getByText("johndoe@gmail.com")).toBeInTheDocument();
         });
     });
 
     test('create a new post', async () => {
-        const mockPost = { id: 2, title: "New Post", body: "This is a test to make a new post. Yay!" };
+        const mockPost = { id: 2, name: "Jack Shepherd", email: "jcshepherd@gmail.com" };
         axios.post.mockResolvedValue({ data: mockPost });
 
         const { getByLabelText, getByText, findByText } = render(<FetchApi />);
 
-        fireEvent.change(getByLabelText(/Title:/i), { target: { value: "New Post" } });
-        fireEvent.change(getByLabelText(/Body:/i), { target: { value: "This is a test to make a new post. Yay!" } });
-        fireEvent.click(getByText(/Add Post/i));
+        fireEvent.change(getByLabelText(/Name:/i), { target: { value: "New Post" } });
+        fireEvent.change(getByLabelText(/Email:/i), { target: { value: "jcshepherd@gmail.com" } });
+        fireEvent.click(getByText(/Add User/i));
 
-        await findByText("New Post");
+        await findByText("Jack Shepherd");
 
         expect(axios.post).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/posts', { title: "New Post", body: "This is a test to make a new post. Yay!" });
         expect(screen.getByText("New Post")).toBeInTheDocument();

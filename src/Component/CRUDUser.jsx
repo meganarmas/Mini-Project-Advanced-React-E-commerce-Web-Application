@@ -3,25 +3,24 @@ import axios from 'axios';
 
 const FetchApi = () => {
     const [user, setUser] = useState([]);
-    const [newPost, setNewPost] = useState({title: '', body: ''});
-    const [editUser, setEditUsers] = useState(null);
-    const [password, setPassword] = useState([]);
+    const [newUser, setNewUser] = useState({name: '', email: ''});
+    const [editUser, setEditUser] = useState(null);
 
     const fetchPost = async () => {
         try {
             const response = await axios.get('https://fakestoreapi.com/users');
-            setPosts(response.data);
+            setUser(response.data);
         } catch (error) {
-            console.error('Error fetching posts:', error)
+            console.error('Error fetching users:', error)
         }
     };
 
     const addUser = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://fakestoreapi.com/users', newPost);
-            setPosts([... posts, response.data]);
-            setNewPost({title: '', body: ''});
+            const response = await axios.post('https://fakestoreapi.com/users', newUser);
+            setUser([... posts, response.data]);
+            setNewUser({name: '', email: ''});
         } catch (error) {
             console.error('Error creating user', error);
         }
@@ -29,13 +28,13 @@ const FetchApi = () => {
 
     const updateUser = async (e) => {
         e.preventDefault();
-        if (!editPost) return; 
+        if (!editUser) return; 
 
         try {
-            const response = await axios.put(`https://fakestoreapi.com/users/${editUser.id}`, newPost);
-            setPosts(posts.map(post => post.id === editPost.id ? response.data : post));
-            setEditPost(2); // should clear the editing state
-            setNewPost({title: '', body: ''});
+            const response = await axios.put(`https://fakestoreapi.com/users/${editUser.id}`, newUser);
+            setUser(posts.map(post => post.id === editPost.id ? response.data : post));
+            setEditUser(2); // should clear the editing state
+            setNewUser({name: '', email: ''});
         } catch (error) {
             console.error('Error updating user', error)
         }
@@ -43,8 +42,8 @@ const FetchApi = () => {
 
     const deleteUser = async (id) => {
         try {
-            const response = await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
-            setPosts(posts.filter(post => post.id !== id));
+            const response = await axios.delete(`https://fakestoreapi.com/users/${id}`);
+            setUser(users.filter(user => user.id !== id));
         } catch (error) {
             console.error('Error deleting user:', error)
         }
@@ -56,41 +55,41 @@ const FetchApi = () => {
 
     return(
         <div>
-            <h2>Posts</h2>
+            <h2>User</h2>
             <ul>
-                {posts.map(post => (
-                    <li key={post.id}>
-                        <h2>{post.title}</h2>
-                        <p>{post.body}</p>
-                        <button onClick={() => setEditPost(post)}>Edit</button>
-                        <button onClick={() => deletePost(post.id)}>Delete</button>
+                {users.map(post => (
+                    <li key={user.id}>
+                        <h2>{user.title}</h2>
+                        <p>{user.body}</p>
+                        <button onClick={() => setEditUser(user)}>Edit</button>
+                        <button onClick={() => deleteUser(user.id)}>Delete</button>
                     </li>
                 ))}
             </ul>
 
-            <h2>{editPost ? "Edit Post" : "Create Post"}</h2>
-            <form onSubmit={editPost ? updatePost : addPost}>
+            <h2>{editUser ? "Edit User" : "Create New User"}</h2>
+            <form onSubmit={editUser ? updateUser : addUser}>
                 <div>
-                <label htmlFor='title'>Post Title:</label>
+                <label htmlFor='name'>User's name:</label>
                 <input
                 type="text"
                 id="title"
-                value={newPost.title}
-                onChange={(e) => setNewPost({... newPost, title: e.target.value})}
+                value={newUser.name}
+                onChange={(e) => setNewUser({... newUser, name: e.target.value})}
                 required
                 />
                 </div>
 
                 <div>
-                <label htmlFor="body">Body:</label>
+                <label htmlFor='email'>Email:</label>
                 <textarea
-                id="body"
-                value={newPost.body}
-                onChange={(e) => setNewPost({... newPost, body: e.target.value})}
+                id="email"
+                value={newUser.email}
+                onChange={(e) => setNewUser({... newUser, email: e.target.value})}
                 required
                 />
                 </div>
-                <button type="submit">{editPost ? "Update Post" : "Add Post"}</button>
+                <button type="submit">{editUser ? "Update User" : "Add User"}</button>
             </form>
         </div>
     );
