@@ -14,6 +14,7 @@ import { store } from './store';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductCatalog from './Component/ProductCatalog';
+import OrderHistory from './Component/OrderHistory';
 
 
 const queryClient = new QueryClient();
@@ -49,6 +50,8 @@ function App() {
               <Route path="/shopping-cart" element={<ShoppingCart />} />
               <Route path="/products" element={<CRUDProducts />} />
               <Route path="/catalog" element={<ProductCatalog />} />
+              <Route path="/customer-info" element={<FetchApi />} />
+              <Route path="/order-history" element={<OrderHistory />} />
             </Routes>
           </Router>
         </UserContext.Provider>

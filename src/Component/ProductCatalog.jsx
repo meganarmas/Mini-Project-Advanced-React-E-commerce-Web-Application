@@ -4,7 +4,8 @@ import { addItem } from '../Slice/CartSlice';
 import { Row, Col, Card, Button, Form } from 'react-bootstrap';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-// import { useTranslation } from 'react-i18next';
+import "./i18n";
+import { useTranslation} from 'react-i18next';
 
 
 const fetchProducts = async () => {
@@ -105,7 +106,7 @@ const ProductCatalog = () => {
 
     return (
         <main>
-            <h2>Product Catalog!</h2>
+            <h2>'{t'</h2>
             <h6>Take a second to browse to your heart's content!</h6>
 
             <section aria-labelledby='categories'>

@@ -10,7 +10,7 @@ const ShoppingCart = () => {
     const cartItemIds = Object.keys(cart.items);
     const dispatch = useDispatch();
 
-    const handleAddItems= useCallback((id) => dispatch(addItem({ id })), [dispatch]);
+    const handleAddItems = useCallback((id) => dispatch(addItem({ id })), [dispatch]);
     const handleRemoveItems = useCallback((id) => dispatch(removeItem({ id })), [dispatch]);
     const handleCheckout = useCallback(() => dispatch(checkout()), [dispatch]);
 
@@ -22,7 +22,7 @@ const ShoppingCart = () => {
     });
 
     const getProductName = useCallback((id) => {
-        const index = cartItemIds.findIndex(itemId => itemId == id);
+        const index = cartItemIds.findIndex(itemId => itemId === id);
         const productQuery = productQueries[index];
         return productQuery?.data?.title || "Unknown Product";
     }, [productQueries, cartItemIds]);
@@ -34,19 +34,20 @@ const ShoppingCart = () => {
         }), {}),
         [cartItemIds, getProductName]);
 
-        const totalPrice = useMemo(() => {
-            return cartItemIds.reduce((total, id) => {
-                const index = cartItemsIds.findIndex(itemId => itemId === id);
-                const productQuery = productQueries[index];
 
-                if (productQuery.isSuccess && productQuery.data) {
-                    const productPrice = productQuery.data.price;
-                    const quantity = cart.items[id];
-                    return total + (productPrice * quantity);
-                }
-                return total;
-            }, 0);
-        }, [cart.items, cartItemIds, productQueries]);
+    const totalPrice = useMemo(() => {
+        return cartItemIds.reduce((total, id) => {
+            const index = cartItemIds.findIndex(itemId => itemId === id);
+            const productQuery = productQueries[index];
+
+            if (productQuery.isSuccess && productQuery.data) {
+                const productPrice = productQuery.data.price;
+                const quantity = cart.items[id];
+                return total + (productPrice * quantity);
+            }
+            return total;
+        }, 0);
+    }, [cart.items, cartItemIds, productQueries]);
 
     return (
         <div>
@@ -56,20 +57,20 @@ const ShoppingCart = () => {
                     <ListGroup.Item key={id} className="d-flex justify-content-between align-items-center">
                         <span>{productNames[id]} - Quantity: {quantity}</span>
                         <div>
-                            <Button variant="success" onCLick={() => handleAddItems(id)}>Add Item</Button>
-                            <Button variant="danger" onCLick={() => handleRemoveItems(id)}>Remove Item</Button>
+                            <Button variant="success" onClick={() => handleAddItems(id)}>Add Item</Button>
+                            <Button variant="danger" onClick={() => handleRemoveItems(id)}>Remove Item</Button>
                         </div>
                     </ListGroup.Item>
                 ))}
-             </ListGroup>
-             <p>Total Items: {cart.totalItems}</p>
-             <p>Total Price: ${totalPrice.toFixed(2)}</p>
-             <Button variant="primary" onClick={handleCheckout}>Checkout</Button>
-             <Link to="/home">
+            </ListGroup>
+            <p>Total Items: {cart.totalItems}</p>
+            <p>Total Price: ${totalPrice.toFixed(3)}</p>
+            <Button variant="primary" onClick={handleCheckout}>Checkout</Button>
+            <Link to="/home">
                 <Button variant="secondary" className="ms-2">Return Home</Button>
             </Link>
         </div>
-        );
+    );
 };
 
 export default ShoppingCart;
