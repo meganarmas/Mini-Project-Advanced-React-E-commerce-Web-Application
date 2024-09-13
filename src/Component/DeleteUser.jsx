@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
 import UserContext from './UserContext';
 import UserContext from './UserContext';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +13,7 @@ const DeleteAccount = () => {
         if (confirmDelete) {
             localStorage.removeItem('userSession');
             setUser({ name: '', isLoggedIn: false });
-            mavigate('/home');
+            navigate('/home');
         }
     };
 
