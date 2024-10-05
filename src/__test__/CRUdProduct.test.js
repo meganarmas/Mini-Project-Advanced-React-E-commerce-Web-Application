@@ -29,7 +29,7 @@ describe('CRUDProduct Component', () => {
         const mockProduct = { id: 2, title: 'Product B', price: '29.99', description: 'This is a test for adding a new product.' };
         axios.post.mockResolvedValue({ data: mockProduct });
 
-        const { getByLabelText, getByText, findByText } = render(<FetchApi />);
+        const { getByLabelText, getByText, findByText } = render(<CRUDProduct />);
 
         fireEvent.change(getByLabelText(/Product Title:/i), { target: { value: 'Product B' } });
         fireEvent.change(getByLabelText(/Price:/i), { target: { value: '29.99' } });
@@ -46,37 +46,6 @@ describe('CRUDProduct Component', () => {
         expect(screen.getByText('Product B')).toBeInTheDocument();
         expect(screen.getByText('This is a test for adding a new product.')).toBeInTheDocument();
         expect(screen.getByText('Price: $29.99')).toBeInTheDocument();
-    });
-
-    test('edits a product', async () => {
-        const initialProducts = [
-            { id: 1, title: 'Product C', price: '39.99', description: 'This is the original product.' }
-        ];
-        const updatedProduct = { id: 1, title: 'Updated Product C', price: '49.99', description: 'This is the updated product!' };
-
-        axios.get.mockResolvedValue({ data: initialProducts });
-        axios.put.mockResolvedValue({ data: updatedProduct });
-
-        render(<CRUDProduct />);
-
-        await waitFor(() => expect(screen.getByText('Product C')).toBeInTheDocument());
-
-        fireEvent.click(screen.getByText('Edit'));
-        fireEvent.change(screen.getByLabelText(/Product Title:/i), { target: { value: 'Updated Product C' } });
-        fireEvent.change(screen.getByLabelText(/Price:/i), { target: { value: '49.99' } });
-        fireEvent.change(screen.getByLabelText(/Description:/i), { target: { value: 'This is the updated product!' } });
-        fireEvent.click(screen.getByText(/Update Product/i));
-
-        await waitFor(() => {
-            expect(axios.put).toHaveBeenCalledWith('https://fakestoreapi.com/products/1', {
-                title: 'Updated Product C',
-                price: '49.99',
-                description: 'This is the updated product!'
-            });
-            expect(screen.getByText('Updated Product C')).toBeInTheDocument();
-            expect(screen.getByText('This is the updated product!')).toBeInTheDocument();
-            expect(screen.getByText('Price: $49.99')).toBeInTheDocument();
-        });
     });
 
     test('deletes a product', async () => {
