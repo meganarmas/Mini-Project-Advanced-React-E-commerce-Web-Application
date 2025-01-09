@@ -5,7 +5,7 @@ import React from "react";
 function NavigationBar() {
     return(
         <Navbar className="navbar" expand="lg">
-            <Navbar.Brand as={Link} to="/home">Home</Navbar.Brand> <br />
+            <Navbar.Brand as={Link} to="/">Home</Navbar.Brand> <br />
             <Navbar.Brand as={Link} to="/login">Login</Navbar.Brand> <br />
             <Navbar.Brand as={Link} to="/logout">Logout</Navbar.Brand> <br />
             <Navbar.Brand as={Link} to="/shopping-cart">Shopping Cart</Navbar.Brand> <br />
