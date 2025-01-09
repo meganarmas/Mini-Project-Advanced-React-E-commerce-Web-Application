@@ -40,3 +40,27 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Navbar CSS */
+
+.navbar-custom {
+  background: linear-gradient(135deg, pink, #007bff); 
+}
+
+.navbar-brand-custom {
+  font-family: "Poppins", sans-serif; /* Modern font */
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.nav-link-custom:hover {
+  color: #ffdd40 !important; /* Hover effect */
+}
+
+.navbar-custom .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-custom .navbar-toggler-icon {
+  background-color: #fff; /* Toggler icon color */
+}
