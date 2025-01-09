@@ -45,7 +45,7 @@ function App() {
           <Router>
             <NavigationBar />
             <Routes>
-              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/shopping-cart" element={<ShoppingCart />} />
