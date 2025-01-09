@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { store } from './store';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -45,7 +45,7 @@ function App() {
           <Router>
             <NavigationBar />
             <Routes>
-              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/shopping-cart" element={<ShoppingCart />} />
