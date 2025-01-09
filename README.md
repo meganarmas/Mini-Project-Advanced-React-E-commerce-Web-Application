@@ -12,4 +12,4 @@ Once everything had been downloaded accordingly, run "npm run dev" to open the d
 
 There is a language button in both the Home page and the Shopping Cart page. Click the 'Korean' button will change the language to Korean. The pages are atomically in English.
 
-To test CRUD operations, go to the "test" folder and click on the appropriate file. Type in "npm run test" in the terminal. Test will start automatically.
+To test CRUD operations, go to the "__test__" folder and click on the appropriate file. Type in "npm run test" in the terminal. Test will start automatically.
