@@ -5,3 +5,8 @@
   text-align: center;
   min-height: 100vh;
 }
+
+.nav-item-custom:hover {
+  font-style: italic;
+  color: brown;
+}
