@@ -113,17 +113,17 @@ const ProductCatalog = () => {
 
     return (
         <main>
-            <h2>{t('topMessage')}</h2>
+            <h3>{t('topMessage')}</h3>
             <h6>{t('paragraph')}</h6>
 
             <section aria-labelledby='categories'>
-                <h4 id="categories">{t('categories')}</h4>
+                <h4 id="categories" style={{ textAlign: 'center'}}>{t('categories')}</h4>
                 <ul>
-                    <li>
+                    <li style={{listStyle: 'none'}}>
                         <Button variant='link' onClick={() => handleCategoryChange('')}>All</Button>
                     </li>
                     {categories && categories.map(cat => (
-                        <li key={cat}>
+                        <li key={cat}  style={{listStyle: 'none'}}>
                             <Button variant='link' onClick={() => handleCategoryChange(cat)}>{cat}</Button>
                         </li>
                     ))}
