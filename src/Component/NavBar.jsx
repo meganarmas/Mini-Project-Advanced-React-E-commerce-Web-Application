@@ -7,7 +7,7 @@ function NavigationBar() {
     return (
         <Navbar expand="lg" className="p-2" style={{ width: "100%", backgroundColor: "beige" }}>
             <Container fluid>
-                <Navbar.Brand as={Link} to="/home" className="fw-bold text-uppercase">
+                <Navbar.Brand as={Link} to="/" className="fw-bold text-uppercase">
                    E-Commerce App
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar-nav" />
