@@ -9,7 +9,6 @@ import { useTranslation} from 'react-i18next';
 
 function Home () {
     const { user } = useContext(UserContext);
-
     const cartCount = useCartCount();
     const cart = useSelector((state) => state.cart);
     const cartItemIds = Object.keys(cart.items);
@@ -22,7 +21,9 @@ function Home () {
     return (
         <Container>
             <h1>{t('welcomeMessage')}</h1>
-            <p>You are {user.isLoggedIn ? "logged in" : "logged out"}</p>
+            {t('statusLog', {
+                    status: user.isLoggedIn ? t('loggedIn') : t('loggedOut'),
+                })}
             <p>Your cart has {cart.totalItems} item(s).</p>
 
             <Nav as="nav" role="menubar" className="mr-auto">

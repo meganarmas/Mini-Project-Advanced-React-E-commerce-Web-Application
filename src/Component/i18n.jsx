@@ -16,7 +16,10 @@ const resources = {
             filter: "Filter",
             welcomeMessage: " Welcome to the E-Commerce App!",
             products: "Products",
-            addToCart: "Add to Cart"
+            addToCart: "Add to Cart",
+            statusLog: "You are {{status}}",
+            loggedIn: "logged in",
+            loggedOut: "logged out"
         },
     },
     kr: {
@@ -33,7 +36,10 @@ const resources = {
             filter: "필터",
             welcomeMessage: "이커머스 앱에 오신 것을 환영합니다!",
             products: "제품",
-            addToCart: "장바구니에 추가"
+            addToCart: "장바구니에 추가",
+            statusLog: "당신은 {{status}} 상태입니다'",
+            loggedIn: "로그인되었습니다",
+            loggedOut: "로그아웃되었습니다"
         },
     },
 };
